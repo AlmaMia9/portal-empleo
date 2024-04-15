@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +19,8 @@ public class ReporteController {
     @Autowired
     ReporteService reporteService;
 
-    @GetMapping("/generarProformaPdf")
-    public ResponseEntity<byte[]> generarProformaPdf() {
+    @GetMapping("/generarOfertaTrabajoPdf/{idOfertaTrabajo}")
+    public ResponseEntity<byte[]> generarProformaPdf(@PathVariable Integer idOfertaTrabajo) {
         try {
 
             HttpHeaders headers = new HttpHeaders();
@@ -29,10 +30,10 @@ public class ReporteController {
             // headers.setContentDisposition(ContentDisposition.attachment().filename("proforma.pdf").build());
 
             // Para mostrar el PDF en el navegador (descomenta la línea siguiente)
-            headers.setContentDisposition(ContentDisposition.inline().filename("proforma.pdf").build());
+            headers.setContentDisposition(ContentDisposition.inline().filename("OfertaTrabajo.pdf").build());
 
             return new ResponseEntity<>(
-                    reporteService.generarProformaPdf(),
+                    reporteService.generarOfertaTrabajoPdf(idOfertaTrabajo),
                     headers,
                     HttpStatus.OK);
         } catch (Exception e) {
